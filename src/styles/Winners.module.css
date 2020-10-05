@@ -1,0 +1,185 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 0;
+  height: 130%;
+  background: url('../assets/nachos/nachos-left.png') no-repeat 91px 219px/192px 126px, url('../assets/nachos/nachos-right.png') no-repeat right 57px/196px 394px, var(--clr-dark);
+}
+
+.heading {
+  margin-bottom: 16px;
+  font-family: Lora;
+  font-size: 36px;
+  line-height: 32px;
+  color: var(--clr-white-darker);
+}
+
+.text {
+  text-align: center;
+  margin-bottom: 8px;
+  font-family: Fira Sans;
+  font-size: 16px;
+  line-height: 16px;
+  color: rgba(249, 249, 248, 0.9);
+}
+
+.search-box {
+  margin-top: 16px;
+  display: flex;
+  width: 288px;
+  height: 40px;
+  background: var(--clr-white);
+  border: 1px solid var(--clr-gray);
+  border-radius: 3px;
+}
+
+.input {
+  padding-left: 16px;
+  flex-grow: 1;
+  font-family: Fira Sans;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--clr-gray-ab);
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.tabs {
+  display: flex;
+  margin-top: 30px;
+  border-radius: 4px;
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 202px;
+  height: 44px;
+  font-family: Fira Sans;
+  font-size: 17px;
+  line-height: 25px;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+}
+
+.tab-selected {
+  color: var(--clr-dark);
+  background: var(--clr-white);
+}
+
+.tab-unselected {
+  color: var(--clr-lightgray);
+  background: var(--clr-orange);
+}
+
+.winner-card-box {
+  margin-top: 22px;
+}
+
+.winner-card {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  margin-bottom: 7px;
+  width: 808px;
+  height: 48px;
+  background: var(--clr-white);
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.prise {
+  flex: 6;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.phone {
+  display: inline-flex;
+  flex: 5;
+  font-weight: normal;
+  line-height: 16px;
+}
+
+.date {
+  flex: 4;
+  font-weight: normal;
+  line-height: 16px;
+}
+
+.prise, .phone, .date {
+  font-family: Fira Sans;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.01em;
+  color: #444444;
+}
+
+@media(max-width: 900px) {
+  .winner-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .winner-card-box {
+    padding-top: 22px;
+    width: 95%;
+  }
+  .tabs {
+    margin: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+@media(max-width: 576px) {
+  .wrapper {
+    padding: 50px 0;
+  }
+  .winner-card-box {
+    padding-top: 0;
+  }
+  .winner-card {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+  }
+  .heading {
+    font-size: 32px;
+    text-align: center;
+  }
+  .text {
+    text-align: center;
+  }
+  .input {
+    width: 100%;
+  }
+  .prise, .phone, .date {
+    padding: 4px;
+  }
+}

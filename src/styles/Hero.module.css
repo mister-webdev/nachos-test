@@ -1,0 +1,155 @@
+.hero {
+  padding: 16px 48px;
+  width: 100%;
+  height: 800px;
+  background: url('../assets/bg-flames-black.svg') no-repeat bottom/contain, url('../assets/bg-rocks.png') no-repeat center/cover;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  margin-left: 16px;
+  max-width: 100%;
+  height: 48px;
+}
+
+.logo:first-child {
+  margin-left: 0;
+}
+
+.nav {
+  margin: auto;
+}
+
+.navlink {
+  display: inline-block;
+  position: relative;
+  margin-right: 32px;
+  height: 100%;
+  padding: 8px 0;
+  font-family: Fira Sans;
+  font-size: 16px;
+  line-height: 25px;
+  color: var(--clr-white);
+  text-decoration: none;
+}
+
+.navlink:last-child {
+  margin-right: 0;
+}
+
+.navlink:before {
+  position: absolute;
+  content: '';
+  bottom: 8px;
+  left: 2px;
+  height: 2px;
+  width: 96%;
+  background: var(--clr-white);
+  transform-origin: left;
+  transform: scale(0);
+  transition: .3s ease;
+}
+
+.navlink:hover:before {
+  transform: scale(1);
+}
+
+.hero-main {
+  display: flex;
+  margin-top: 64px;
+  margin-left: 16px;
+}
+
+.heading {
+  margin-bottom: 16px;
+  font-family: Lora;
+  font-weight: bold;
+  font-size: 54px;
+  line-height: 112%;
+  letter-spacing: 1px;
+  color: var(--clr-white);
+}
+
+.description {
+  margin-bottom: 24px;
+  font-family: Fira Sans;
+  font-size: 20px;
+  line-height: 31px;
+  color: var(--clr-white);
+}
+
+.hero-picture img {
+  position: relative;
+  display: block;
+  padding-top: 40px;
+  width: 718px;
+}
+
+/* 
+MEDIA 
+*/
+
+@media(max-width: 1200px) {
+  .nav {
+    display: none;
+  }
+  .hero {
+    padding: 16px 48px;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-main {
+    flex-wrap: wrap;
+  }
+  .hero-picture {
+    width: 100%;
+  }
+  .hero-picture img {
+    width: 100%;
+  }
+}
+
+@media(max-width: 576px) {
+  .header, .hero-info {
+    padding: 16px;
+  }
+  .logo {
+    margin-left: 16px;
+    max-width: 100%;
+    height: 32px;
+  }
+  .hero {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-main {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    flex-wrap: wrap;
+  }
+  .heading {
+    margin-top: 0;
+  }
+  .hero-picture {
+    padding: 0 0 64px 0;
+    width: 100%;
+    overflow: hidden;
+  }
+  .hero-picture img {
+    width: 100%;
+    transform: scale(1.2) translateX(-20px);
+  }
+  .hero-main {
+    margin-top: 32px;
+  }
+  .heading {
+    font-size: 40px;
+  }
+}
