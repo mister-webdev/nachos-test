@@ -1,21 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from '../styles/Winners.module.css'
 import button from '../styles/Buttons.module.css'
 import searchIcon from '../assets/search-icon.svg'
 import NumberFormat from 'react-number-format'
 import { TabsItem } from '../elements/TabsItem'
 import { WinnerCard } from '../elements/WinnerCard'
+import { Spinner } from '../elements/Spinner'
 import { useFetch } from '../hooks/useFetch'
+import { API_URL, SEARCH_URL } from '../config'
 
 export const Winners = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [input, setInput] = useState('')
   const [selectedTab, setSelectedTab] = useState('jbl_speaker')
-  const [cardsToShow, setCardsToShow] = useState(5)
   const [
     {
-      data: { winners }
-    }
-  ] = useFetch()
+      data: { winners, currentPage, totalPages },
+      loading
+    },
+    fetchData
+  ] = useFetch(searchTerm)
 
   const tabItems = [
     {
@@ -35,13 +39,22 @@ export const Winners = () => {
     },
   ]
 
-  const handleChange = e => {
+  const searchWinners = search => {
+    const filtered = search.replace(/\D/g, '')
+    const endpoint = filtered.length === 11 ? `${SEARCH_URL}${filtered}` : API_URL
+    setSearchTerm(filtered)
+    fetchData(endpoint)
+  }
+
+  const handleSearch = e => {
     const { value } = e.target
-    setSearchTerm(value)
+    setInput(value)
+    searchWinners(value)
   }
 
   const loadMore = () => {
-    setCardsToShow(cardsToShow + 5)
+    const endpoint = `${API_URL}?page=${currentPage + 1}`
+    fetchData(endpoint)
   }
 
   return (
@@ -52,68 +65,65 @@ export const Winners = () => {
 
       <div className={style['search-box']}>
         <NumberFormat
+          type="tel"
           format="+7 (###) ###-####"
           allowEmptyFormatting mask="_"
           className={style.input}
-          value={searchTerm}
-          onChange={handleChange}
+          value={input}
+          onChange={handleSearch}
         />
         <button className={button.search}>
           <img src={searchIcon} alt='' role='presentation' />
         </button>
       </div>
 
-      <div className={style.tabs}>
-        {tabItems.map(({ id, name, title }) =>
-          (<TabsItem
-            key={id}
-            title={title}
-            onItemClicked={() => setSelectedTab(name)}
-            isSelected={selectedTab === name}
-          />
-          ))}
-      </div>
+      {searchTerm.length === 0 ||
+        searchTerm.length < 11 ||
+        searchTerm.endsWith('_')
+        ? (<div className={style.tabs}>
+          {tabItems.map(({ id, name, title }) =>
+            (<TabsItem
+              key={id}
+              title={title}
+              onItemClicked={() => setSelectedTab(name)}
+              isSelected={selectedTab === name}
+            />)
+          )}
+        </div>)
+        : null
+      }
 
       <div className={style['winner-card-box']}>
         <>
           {selectedTab === 'main_prise'
             ? (<p className={style.text}>Победители не определены</p>)
-            : null
-          }
+            : null}
         </>
         <>
-          {!searchTerm.endsWith('_')
-            ? (winners && winners
-              .slice(0, cardsToShow)
-              .filter(item => (
-                item.prise_slug === selectedTab &&
-                item.phone.endsWith(searchTerm.slice(-2))
-              ))
-              .map(({ fd, ...items }) => (
-                <WinnerCard {...items} key={fd} />
-              )))
-            : (winners && winners
-              .slice(0, cardsToShow)
-              .filter(item => (
-                item.prise_slug === selectedTab
-              ))
-              .map(({ fd, ...items }) => (
-                <WinnerCard {...items} key={fd} />
-              )))
-          }
+          {winners && winners
+            .filter(item => (
+              item.prise_slug === selectedTab
+            ))
+            .map(({ fd, ...items }) => (
+              <WinnerCard {...items} key={fd} />
+            ))}
         </>
       </div>
-      {cardsToShow < winners.length &&
-        cardsToShow >= 5 &&
-        selectedTab !== 'main_prise'
-        ? (
-          <button
-            className={button['show-more']}
-            onClick={loadMore}
-          >
-            Показать ещё
-          </button>
-        ) : null
+      {loading
+        ? <Spinner />
+        : (currentPage < totalPages &&
+          selectedTab !== 'main_prise') &&
+          (searchTerm.length === 0 ||
+            searchTerm.length < 11 ||
+            searchTerm.endsWith('_'))
+          ? (
+            <button
+              className={button['show-more']}
+              onClick={loadMore}
+            >
+              Показать ещё
+            </button>
+          ) : null
       }
     </section>
   )
