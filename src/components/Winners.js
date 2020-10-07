@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import style from '../styles/Winners.module.css'
 import button from '../styles/Buttons.module.css'
 import searchIcon from '../assets/search-icon.svg'
